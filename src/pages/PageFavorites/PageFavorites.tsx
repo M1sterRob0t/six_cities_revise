@@ -3,7 +3,7 @@ import Favorites from '../../components/Favorites';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 
-function PageMain(): JSX.Element {
+function PageFavorites(): JSX.Element {
   return (
     <div className="page">
       <Header />
@@ -18,4 +18,4 @@ function PageMain(): JSX.Element {
   );
 }
 
-export default PageMain;
+export default PageFavorites;

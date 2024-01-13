@@ -1,6 +1,6 @@
-# Личный проект «{{projectTitle}}»
+# Личный проект «Six Cities»
 
-* Студент: [{{M1ster Rob0t}}]
+Студент: M1ster Rob0t.
 
 ---
 

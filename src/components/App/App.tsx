@@ -6,24 +6,30 @@ import PageMain from '../../pages/PageMain/PageMain';
 import NotFound from '../NotFound';
 import { AppRoute } from '../../utils/constants';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import { TPlace } from '../../types/place';
 
-function App(): JSX.Element {
+
+interface IApp {
+  offers: TPlace[];
+}
+
+function App({offers}: IApp): JSX.Element {
   const isAuthorized = true;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <PageMain />
+          <PageMain offers={offers} />
         </Route>
         <Route path={AppRoute.Login} exact>
           <PageLogin />
         </Route>
         <Route path={AppRoute.Property} exact>
-          <PageProperty />
+          <PageProperty offers={offers} />
         </Route>
         <PrivateRoute path={AppRoute.Favorites} isAuthorized={isAuthorized} exact render={() => (
-          <PageFavorites />
+          <PageFavorites offers={offers} />
         )}
         />
         <Route path={AppRoute.NotFound}>

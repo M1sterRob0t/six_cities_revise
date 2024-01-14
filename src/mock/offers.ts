@@ -1,4 +1,4 @@
-import { TPlace } from './types/place';
+import { TPlace } from '../types/place';
 
 function generateMockPlaces(amount: number): TPlace[] {
   const result: TPlace[] = [];
@@ -49,4 +49,4 @@ function generateMockPlaces(amount: number): TPlace[] {
   return result;
 }
 
-export const mockPlaces = generateMockPlaces(5);
+export const mockOffers = generateMockPlaces(5);

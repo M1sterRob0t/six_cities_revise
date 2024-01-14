@@ -10,7 +10,7 @@ function PlacesNearby({ places }: IPlacesNearby): JSX.Element {
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
       <div className="near-places__list places__list">
-        {places.map((place) => <Card parentName='near-places' place={place} key={place.id} />)}
+        {places.map((place) => <Card parentName='near-places' offer={place} key={place.id} />)}
       </div>
     </section>
   );

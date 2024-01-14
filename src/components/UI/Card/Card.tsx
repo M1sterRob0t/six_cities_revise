@@ -3,15 +3,16 @@ import BookmarkButton from '../BookmarkButton';
 import Rating from '../Rating';
 
 interface ICard {
-  place: TOffer;
+  offer: TOffer;
   parentName: string;
+  onHover?: (offer: TOffer) => void;
 }
 
-function Card({ place, parentName }: ICard): JSX.Element {
-  const { isFavorite, isPremium, price, title, type, rating } = place;
+function Card({ offer, parentName, onHover }: ICard): JSX.Element {
+  const { isFavorite, isPremium, price, title, type, rating } = offer;
 
   return (
-    <article className={`${parentName}__card place-card`}>
+    <article className={`${parentName}__card place-card`} onMouseEnter={onHover ? () => onHover(offer) : undefined}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>

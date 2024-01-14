@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
 import { TOffer } from '../../../types/offers';
 import BookmarkButton from '../BookmarkButton';
 import Rating from '../Rating';
+import { AppRoute } from '../../../utils/constants';
 
 interface ICard {
   offer: TOffer;
@@ -9,7 +11,7 @@ interface ICard {
 }
 
 function Card({ offer, parentName, onHover }: ICard): JSX.Element {
-  const { isFavorite, isPremium, price, title, type, rating } = offer;
+  const { isFavorite, isPremium, price, title, type, rating, id } = offer;
 
   return (
     <article className={`${parentName}__card place-card`} onMouseEnter={onHover ? () => onHover(offer) : undefined}>
@@ -33,7 +35,7 @@ function Card({ offer, parentName, onHover }: ICard): JSX.Element {
         </div>
         <Rating className="place-card" rating={rating} />
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

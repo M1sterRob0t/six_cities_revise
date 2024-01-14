@@ -13,13 +13,13 @@ export type TPlace = {
   'host': {
     'avatarUrl': string;
     'id': number;
-    'is_pro': boolean;
+    'isPro': boolean;
     'name': string;
   };
   'id': number;
   'images': string[];
-  'isFavorite': false;
-  'isPremium': false;
+  'isFavorite': boolean;
+  'isPremium': boolean;
   'location': {
     'latitude': number;
     'longitude': number;

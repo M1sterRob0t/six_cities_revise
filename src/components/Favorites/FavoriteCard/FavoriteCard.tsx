@@ -1,9 +1,9 @@
-import { TPlace } from '../../types/place';
-import Rating from '../UI/Rating';
-import BookmarkButton from '../UI/BookmarkButton';
+import { TOffer } from '../../../types/offers';
+import Rating from '../../UI/Rating';
+import BookmarkButton from '../../UI/BookmarkButton';
 
 interface IFavoriteCard {
-  place: TPlace;
+  place: TOffer;
 }
 
 function FavoriteCard({ place }: IFavoriteCard): JSX.Element {

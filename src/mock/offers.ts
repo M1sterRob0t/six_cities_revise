@@ -1,10 +1,10 @@
-import { TPlace } from '../types/place';
+import { TOffer } from '../types/offers';
 
-function generateMockPlaces(amount: number): TPlace[] {
-  const result: TPlace[] = [];
+function generateMockPlaces(amount: number): TOffer[] {
+  const result: TOffer[] = [];
 
   let idCounter = 0;
-  const mockPlace: TPlace = {
+  const mockPlace: TOffer = {
     'bedrooms': 3,
     'city': {
       'location': {
@@ -41,7 +41,7 @@ function generateMockPlaces(amount: number): TPlace[] {
   };
 
   for (let i = 0; i < amount; i++) {
-    const copiedObject = JSON.parse(JSON.stringify(mockPlace)) as TPlace;
+    const copiedObject = JSON.parse(JSON.stringify(mockPlace)) as TOffer;
     copiedObject.id = ++idCounter;
     result.push(copiedObject);
   }

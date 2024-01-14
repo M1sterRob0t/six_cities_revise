@@ -1,10 +1,10 @@
 
 import Header from '../../components/Header';
 import Main from '../../components/Main';
-import { TPlace } from '../../types/place';
+import { TOffer } from '../../types/offers';
 
 interface IPageMain {
-  offers: TPlace[];
+  offers: TOffer[];
 }
 
 function PageMain({offers}: IPageMain): JSX.Element {

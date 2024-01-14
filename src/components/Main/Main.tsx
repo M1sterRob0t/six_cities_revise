@@ -2,10 +2,10 @@ import Map from '../Map';
 import PlacesList from '../PlacesList';
 import Sorting from '../Sorting';
 import Tabs from '../Tabs';
-import { TPlace } from '../../types/place';
+import { TOffer } from '../../types/offers';
 
 interface IMain {
-  offers: TPlace[];
+  offers: TOffer[];
 }
 
 function Main({offers}: IMain): JSX.Element {

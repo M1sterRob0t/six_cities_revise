@@ -2,10 +2,10 @@
 import Favorites from '../../components/Favorites';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import { TPlace } from '../../types/place';
+import { TOffer } from '../../types/offers';
 
 interface IPageFavorites {
-  offers: TPlace[];
+  offers: TOffer[];
 }
 
 function PageFavorites({offers}: IPageFavorites): JSX.Element {

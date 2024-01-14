@@ -1,22 +1,23 @@
-import { TPlace } from '../../types/place';
-import BookmarkButton from '../UI/BookmarkButton';
-import Rating from '../UI/Rating';
+import { TOffer } from '../../../types/offers';
+import BookmarkButton from '../BookmarkButton';
+import Rating from '../Rating';
 
 interface ICard {
-  place: TPlace;
+  place: TOffer;
+  parentName: string;
 }
 
-function Card({ place }: ICard): JSX.Element {
+function Card({ place, parentName }: ICard): JSX.Element {
   const { isFavorite, isPremium, price, title, type, rating } = place;
 
   return (
-    <article className="cities__place-card place-card">
+    <article className={`${parentName}__card place-card`}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${parentName}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image" />
         </a>

@@ -1,8 +1,8 @@
-import { TPlace } from '../../types/place';
-import FavoriteLocation from '../FavoritesLocation';
+import { TOffer } from '../../types/offers';
+import FavoriteLocation from './FavoritesLocation';
 
 interface IFavorites {
-  offers: TPlace[];
+  offers: TOffer[];
 }
 function Favorites({offers}: IFavorites): JSX.Element {
   return (

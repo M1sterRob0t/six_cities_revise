@@ -1,4 +1,4 @@
-export type TPlace = {
+export type TOffer = {
   'bedrooms': number;
   'city': {
     'location': {

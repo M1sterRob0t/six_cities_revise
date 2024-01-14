@@ -1,8 +1,8 @@
-import { TPlace } from '../../types/place';
+import { TOffer } from '../../../types/offers';
 import FavoriteCard from '../FavoriteCard';
 
 interface IFavoriteLocation {
-  places: TPlace[];
+  places: TOffer[];
   location: string;
 }
 

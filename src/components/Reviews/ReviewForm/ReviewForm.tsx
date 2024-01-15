@@ -3,7 +3,6 @@ import { useState } from 'react';
 function ReviewForm(): JSX.Element {
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);
-  console.log(text, rating);
 
   return (
     <form className="reviews__form form" action="#" method="post">

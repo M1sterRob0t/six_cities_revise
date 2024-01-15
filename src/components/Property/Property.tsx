@@ -1,17 +1,22 @@
+import { TCity, TPoint } from '../../types/map';
 import { TOffer } from '../../types/offers';
 import { TReview } from '../../types/review';
 import Reviews from '../Reviews';
 import BookmarkButton from '../UI/BookmarkButton';
+import Map from '../UI/Map';
 import Rating from '../UI/Rating';
 import User from '../UI/User';
 
 interface IProperty {
   place: TOffer;
   reviews: TReview[];
+  placesNearby: TOffer[];
 }
 
-function Property({ place, reviews }: IProperty): JSX.Element {
+function Property({ place, reviews, placesNearby }: IProperty): JSX.Element {
   const { isPremium, host, isFavorite, title, goods, description, bedrooms, images, price, rating, type, maxAdults } = place;
+  const city: TCity = place.city;
+  const points: TPoint[] = placesNearby.map((offer) => ({...offer.location, id: offer.id}));
 
   return (
     <section className="property">
@@ -78,7 +83,7 @@ function Property({ place, reviews }: IProperty): JSX.Element {
           <Reviews reviews={reviews} />
         </div>
       </div>
-      <section className="property__map map" />
+      <Map city={city} points={points} selectedPoint={null} parentName='property'/>
     </section>
   );
 }

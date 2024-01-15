@@ -11,14 +11,14 @@ interface IPageProperty {
 }
 
 function PageProperty({offers, reviews}: IPageProperty): JSX.Element {
-
+  const placesNearby = offers.slice(0,3);
   return (
     <div className="page">
       <Header />
       <main className="page__main page__main--property">
-        <Property place={offers[0]} reviews={reviews} />
+        <Property place={offers[0]} reviews={reviews} placesNearby={placesNearby} />
         <div className="container">
-          <PlacesNearby places={offers.slice(0,3)} />
+          <PlacesNearby places={placesNearby} />
         </div>
       </main>
     </div>

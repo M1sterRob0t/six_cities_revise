@@ -33,7 +33,7 @@ function Main({offers}: IMain): JSX.Element {
             <PlacesList places={offers} onCardHover={onCardHover} />
           </section>
           <div className="cities__right-section">
-            <Map city={city} points={points} selectedPoint={activePoint}/>
+            <Map city={city} points={points} selectedPoint={activePoint} parentName='cities'/>
           </div>
         </div>
       </div>

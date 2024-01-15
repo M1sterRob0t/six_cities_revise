@@ -22,10 +22,11 @@ interface IMap {
   city: TCity;
   points: TPoints;
   selectedPoint: TPoint | null;
+  parentName: string;
 }
 
 function Map(props: IMap): JSX.Element {
-  const { city, points, selectedPoint } = props;
+  const { city, points, selectedPoint, parentName } = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -49,7 +50,7 @@ function Map(props: IMap): JSX.Element {
     }
   }, [map, points, selectedPoint]);
 
-  return <section className="cities__map map" ref={mapRef}></section>;
+  return <section className={`${parentName}__map map`} ref={mapRef}></section>;
 }
 
 export default Map;

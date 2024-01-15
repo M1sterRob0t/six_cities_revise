@@ -1,14 +1,17 @@
 export type TCity = {
-  title: string;
-  lat: number;
-  lng: number;
-  zoom: number;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  name: string;
 };
 
 export type TPoint = {
-  title: string;
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
+  zoom: number;
+  id: number;
 };
 
 export type TPoints = TPoint[];

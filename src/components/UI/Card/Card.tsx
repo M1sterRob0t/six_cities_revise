@@ -7,14 +7,30 @@ import { AppRoute } from '../../../utils/constants';
 interface ICard {
   offer: TOffer;
   parentName: string;
-  onHover?: (offer: TOffer) => void;
+  onHover?: (offer: TOffer | null) => void;
 }
 
 function Card({ offer, parentName, onHover }: ICard): JSX.Element {
   const { isFavorite, isPremium, price, title, type, rating, id } = offer;
 
+  function onMouseEnter() {
+    if (onHover) {
+      onHover(offer);
+    }
+  }
+
+  function onMouseLeave() {
+    if (onHover) {
+      onHover(null);
+    }
+  }
+
   return (
-    <article className={`${parentName}__card place-card`} onMouseEnter={onHover ? () => onHover(offer) : undefined}>
+    <article
+      className={`${parentName}__card place-card`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -22,7 +38,13 @@ function Card({ offer, parentName, onHover }: ICard): JSX.Element {
       )}
       <div className={`${parentName}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image" />
+          <img
+            className="place-card__image"
+            src="img/apartment-01.jpg"
+            width="260"
+            height="200"
+            alt={offer.title}
+          />
         </a>
       </div>
       <div className="place-card__info">
@@ -39,7 +61,7 @@ function Card({ offer, parentName, onHover }: ICard): JSX.Element {
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
-    </article >
+    </article>
   );
 }
 

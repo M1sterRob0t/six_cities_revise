@@ -9,8 +9,8 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: TCity): Map 
     if (mapRef.current !== null && map === null) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.lat,
-          lng: city.lng,
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
         zoom: 10,
       });

@@ -47,8 +47,11 @@ function Map(props: IMap): JSX.Element {
           )
           .addTo(map);
       });
+
+      // map.locate({setView: true, maxZoom: 8});
+      map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
     }
-  }, [map, points, selectedPoint]);
+  }, [map, points, selectedPoint, city]);
 
   return <section className={`${parentName}__map map`} ref={mapRef}></section>;
 }

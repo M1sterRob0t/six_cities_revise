@@ -1,11 +1,16 @@
-export type TCity = {
+import { City } from '../utils/constants';
+
+export type TCityName = keyof typeof City;
+export type TCity = typeof City[keyof typeof City];
+
+/* export type TCity = {
   location: {
     latitude: number;
     longitude: number;
     zoom: number;
   };
-  name: string;
-};
+  name: TCityName;
+}; */
 
 export type TPoint = {
   latitude: number;
@@ -15,3 +20,5 @@ export type TPoint = {
 };
 
 export type TPoints = TPoint[];
+
+

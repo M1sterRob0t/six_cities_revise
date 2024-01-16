@@ -59,3 +59,11 @@ export const City = {
 } as const;
 
 export const cityNames = Object.values(City).map((city) => city.name);
+
+
+export enum SortType {
+  Popular = 'Popular',
+  PriceLow = 'Price: low to high',
+  PriceHigh = 'Price: high to low',
+  TopRated = 'Top rated first',
+}

@@ -55,10 +55,17 @@ function generateMockPlaces(amount: number): TOffer[] {
   };
 
   for (let i = 0; i < amount; i++) {
+    const value = Math.random();
+
     const copiedObject = JSON.parse(JSON.stringify(mockPlace)) as TOffer;
     copiedObject.id = ++idCounter;
     copiedObject.location.latitude = coords[i][0];
     copiedObject.location.longitude = coords[i][1];
+    copiedObject.price = Math.round(copiedObject.price * Math.random());
+    copiedObject.isPremium = Math.random() > 0.5;
+    copiedObject.isFavorite = Math.random() > 0.5;
+    // eslint-disable-next-line no-nested-ternary
+    copiedObject.rating = (value > 0.8) ? 5 : (value > 0.6) ? 4 : (value > 0.4) ? 3 : value > 0.2 ? 2 : 1;
     result.push(copiedObject);
   }
 

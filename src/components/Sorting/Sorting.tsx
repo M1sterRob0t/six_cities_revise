@@ -1,18 +1,42 @@
-function Sorting(): JSX.Element {
+import { useState } from 'react';
+import { SortType } from '../../utils/constants';
+const sortTypes = Object.values(SortType);
+
+interface ISorting {
+  currentSortType: SortType;
+  onSortTypeChange: (newSortType: SortType) => void;
+}
+
+function Sorting({ currentSortType, onSortTypeChange }: ISorting): JSX.Element {
+  const [isOpened, setIsOpened] = useState(false);
+
+  function onClick() {
+    setIsOpened((prev) => !prev);
+  }
+
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0}>
-        Popular
+      <span className="places__sorting-type" tabIndex={0} onClick={onClick}>
+        {currentSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className="places__options places__options--custom">
-        <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-        <li className="places__option" tabIndex={0}>Price: low to high</li>
-        <li className="places__option" tabIndex={0}>Price: high to low</li>
-        <li className="places__option" tabIndex={0}>Top rated first</li>
+      <ul className={`places__options places__options--custom ${isOpened ? 'places__options--opened' : ''}`}>
+        {sortTypes.map((sortType) => (
+          <li
+            className={`places__option ${sortType === currentSortType ? 'places__option--active' : ''}`}
+            tabIndex={0}
+            key={sortType}
+            onClick={() => {
+              setIsOpened((prev) => !prev);
+              onSortTypeChange(sortType);
+            }}
+          >
+            {sortType}
+          </li>
+        ))}
       </ul>
     </form>
   );

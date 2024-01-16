@@ -11,7 +11,7 @@ function PageMain({offers}: IPageMain): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
-      <Main offers={offers} />
+      <Main />
     </div>
   );
 }

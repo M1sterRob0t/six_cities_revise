@@ -13,8 +13,9 @@ import { TActions } from '../../store/types/actions';
 import { changeCurrentCity } from '../../store/actions';
 import { ConnectedProps, connect } from 'react-redux';
 
-const mapStateToProps = ({city}: TState) => ({
+const mapStateToProps = ({city, offers}: TState) => ({
   currentCity: city,
+  currentOffers: offers.filter((offer) => offer.city.name === city.name),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<TActions>) => ({
@@ -24,18 +25,10 @@ const mapDispatchToProps = (dispatch: Dispatch<TActions>) => ({
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-
-interface IMain {
-  offers: TOffer[];
-}
-
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & IMain;
 
-function Main({offers, currentCity = City.Amsterdam, onCityChange}: ConnectedComponentProps): JSX.Element {
+function Main({currentOffers, currentCity, onCityChange}: PropsFromRedux): JSX.Element {
   const [activePoint, setActivePoint] = useState<TPoint | null>(null);
-
-  const currentOffers = offers.filter((offer) => offer.city.name === currentCity.name);
   const points: TPoint[] = currentOffers.map((offer) => ({...offer.location, id: offer.id}));
 
   function onCardHover(offer: TOffer | null): void {

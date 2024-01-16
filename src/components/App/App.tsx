@@ -22,13 +22,13 @@ function App({offers, reviews}: IApp): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <PageMain offers={offers} />
+          <PageMain />
         </Route>
         <Route path={AppRoute.Login} exact>
           <PageLogin />
         </Route>
         <Route path={AppRoute.Property} exact>
-          <PageProperty offers={offers} reviews={reviews} />
+          <PageProperty reviews={reviews} />
         </Route>
         <PrivateRoute path={AppRoute.Favorites} isAuthorized={isAuthorized} exact render={() => (
           <PageFavorites offers={offers} />

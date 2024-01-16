@@ -7,14 +7,33 @@ import Tabs from '../Tabs';
 import { TOffer } from '../../types/offers';
 import { TCity, TCityName, TPoint } from '../../types/map';
 import { City, cityNames } from '../../utils/constants';
+import type { TState } from '../../store/types/state';
+import { Dispatch } from 'redux';
+import { TActions } from '../../store/types/actions';
+import { changeCurrentCity } from '../../store/actions';
+import { ConnectedProps, connect } from 'react-redux';
+
+const mapStateToProps = ({city}: TState) => ({
+  currentCity: city,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<TActions>) => ({
+  onCityChange(newCity: TCity) {
+    dispatch(changeCurrentCity(newCity));
+  }
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 interface IMain {
   offers: TOffer[];
 }
 
-function Main({offers}: IMain): JSX.Element {
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & IMain;
+
+function Main({offers, currentCity = City.Amsterdam, onCityChange}: ConnectedComponentProps): JSX.Element {
   const [activePoint, setActivePoint] = useState<TPoint | null>(null);
-  const [currentCity, setCurrentCity] = useState<TCity>(City.Amsterdam);
 
   const currentOffers = offers.filter((offer) => offer.city.name === currentCity.name);
   const points: TPoint[] = currentOffers.map((offer) => ({...offer.location, id: offer.id}));
@@ -24,7 +43,7 @@ function Main({offers}: IMain): JSX.Element {
   }
 
   function onTabChange(newCity: TCityName):void {
-    setCurrentCity(City[newCity]);
+    onCityChange(City[newCity]);
   }
 
   return (
@@ -48,4 +67,4 @@ function Main({offers}: IMain): JSX.Element {
   );
 }
 
-export default Main;
+export default connector(Main);

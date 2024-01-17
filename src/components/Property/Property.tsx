@@ -7,6 +7,8 @@ import Map from '../UI/Map';
 import Rating from '../UI/Rating';
 import User from '../UI/User';
 
+const IMAGES_NUMBER = 6;
+
 interface IProperty {
   place: TOffer;
   reviews: TReview[];
@@ -22,7 +24,7 @@ function Property({ place, reviews, placesNearby }: IProperty): JSX.Element {
     <section className="property">
       <div className="property__gallery-container container">
         <div className="property__gallery">
-          {images.map((src) => (
+          {images.slice(0, IMAGES_NUMBER).map((src) => (
             <div className="property__image-wrapper" key={src}>
               <img
                 className="property__image"

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../utils/constants';
+import { AppRoute } from '../../constants';
 
 interface IHeader {
   isLogin?: true;

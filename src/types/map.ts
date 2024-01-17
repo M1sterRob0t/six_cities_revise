@@ -1,4 +1,4 @@
-import { City } from '../utils/constants';
+import { City } from '../constants';
 
 export type TCityName = keyof typeof City;
 export type TCity = typeof City[keyof typeof City];

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { TOffer } from '../../../types/offers';
 import BookmarkButton from '../BookmarkButton';
 import Rating from '../Rating';
-import { AppRoute } from '../../../utils/constants';
+import { AppRoute } from '../../../constants';
 
 interface ICard {
   offer: TOffer;

@@ -1,21 +1,14 @@
-import { TCity } from '../../types/map';
-import { TOffer } from '../../types/offers';
+import { changeCurrentCity, requireAuth, requireLogout, setOffers } from '../actions';
 
 export enum ActionType {
   ChangeCurrentCity = 'main/changeCurrentCity',
   SetOffers = 'main/setOffers',
+  RequireAuth = 'user/requireAuth',
+  RequireLogout = 'user/requireLogout',
 }
 
-export type TChangeCurrentCityAction = {
-  type: ActionType.ChangeCurrentCity;
-  payload: TCity;
-}
-
-export type TSetOffersAction = {
-  type: ActionType.SetOffers;
-  payload: TOffer[];
-}
-
-export type TActions = TChangeCurrentCityAction | TSetOffersAction;
-
-
+export type TActions =
+  | ReturnType<typeof changeCurrentCity>
+  | ReturnType<typeof setOffers>
+  | ReturnType<typeof requireLogout>
+  | ReturnType<typeof requireAuth>;

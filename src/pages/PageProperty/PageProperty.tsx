@@ -4,7 +4,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import PlacesNearby from '../../components/PlacesNearby/PlacesNearby';
 import Property from '../../components/Property';
-import { AppRoute } from '../../utils/constants';
+import { AppRoute } from '../../constants';
 
 import type { TReview } from '../../types/review';
 import type { TState } from '../../store/types/state';

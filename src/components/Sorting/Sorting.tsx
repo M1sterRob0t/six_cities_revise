@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SortType } from '../../utils/constants';
+import { SortType } from '../../constants';
 const sortTypes = Object.values(SortType);
 
 interface ISorting {

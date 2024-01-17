@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './style.css';
 
 import ErrorImage from './image/sad-cat.png';
-import { AppRoute } from '../../utils/constants';
+import { AppRoute } from '../../constants';
 
 function NotFound(): JSX.Element {
   return (

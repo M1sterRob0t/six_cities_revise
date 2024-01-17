@@ -4,18 +4,16 @@ import PageProperty from '../../pages/PageProperty';
 import PageLogin from '../../pages/PageLogin';
 import PageMain from '../../pages/PageMain/PageMain';
 import NotFound from '../NotFound';
-import { AppRoute } from '../../utils/constants';
+import { AppRoute } from '../../constants';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
-import { TOffer } from '../../types/offers';
 import { TReview } from '../../types/review';
 
 
 interface IApp {
-  offers: TOffer[];
   reviews: TReview[];
 }
 
-function App({offers, reviews}: IApp): JSX.Element {
+function App({reviews}: IApp): JSX.Element {
   const isAuthorized = true;
 
   return (
@@ -31,7 +29,7 @@ function App({offers, reviews}: IApp): JSX.Element {
           <PageProperty reviews={reviews} />
         </Route>
         <PrivateRoute path={AppRoute.Favorites} isAuthorized={isAuthorized} exact render={() => (
-          <PageFavorites offers={offers} />
+          <PageFavorites />
         )}
         />
         <Route path={AppRoute.NotFound}>

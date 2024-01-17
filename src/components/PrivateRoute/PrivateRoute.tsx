@@ -1,6 +1,6 @@
 import {Route, Redirect} from 'react-router-dom';
 import type { RouteProps } from 'react-router-dom';
-import { AppRoute } from '../../utils/constants';
+import { AppRoute } from '../../constants';
 import React from 'react';
 
 interface IPrivateRoute {

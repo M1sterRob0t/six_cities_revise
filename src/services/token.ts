@@ -3,7 +3,7 @@ const AUTH_KEY = 'six-cities-revise-token';
 type TToken = string;
 
 export function saveToken(token: TToken): void {
-  localStorage.setItem(token, AUTH_KEY);
+  localStorage.setItem(AUTH_KEY, token);
 }
 
 export function dropToken(): void {

@@ -14,8 +14,6 @@ interface IApp {
 }
 
 function App({reviews}: IApp): JSX.Element {
-  const isAuthorized = true;
-
   return (
     <BrowserRouter>
       <Switch>
@@ -28,7 +26,7 @@ function App({reviews}: IApp): JSX.Element {
         <Route path={AppRoute.Property} exact>
           <PageProperty reviews={reviews} />
         </Route>
-        <PrivateRoute path={AppRoute.Favorites} isAuthorized={isAuthorized} exact render={() => (
+        <PrivateRoute path={AppRoute.Favorites} exact render={() => (
           <PageFavorites />
         )}
         />

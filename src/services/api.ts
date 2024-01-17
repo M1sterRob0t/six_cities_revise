@@ -33,7 +33,6 @@ const createApi = (unauthorizedCallback: TUnauthCallback): AxiosInstance => {
   api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
       const token = getToken();
-
       if (token && config.headers) {
         config.headers['x-token'] = token;
       }

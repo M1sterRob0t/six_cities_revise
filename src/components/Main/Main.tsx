@@ -50,12 +50,7 @@ const mapDispatchToProps = (dispatch: Dispatch<TActions>) => ({
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Main({
-  currentOffers,
-  currentCity,
-  onCityChange,
-  isLoading,
-}: PropsFromRedux): JSX.Element {
+function Main({ currentOffers, currentCity, onCityChange, isLoading }: PropsFromRedux): JSX.Element {
   const [activePoint, setActivePoint] = useState<TPoint | null>(null);
   const [sortType, setSortType] = useState(SortType.Popular);
 
@@ -79,7 +74,9 @@ function Main({
       <h1 className="visually-hidden">Cities</h1>
       <Tabs currentCity={currentCity.name} cities={cityNames} onChange={onTabChange} />
       <div className="cities">
-        {isLoading ? <Spinner /> : (
+        {isLoading ? (
+          <Spinner />
+        ) : (
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>

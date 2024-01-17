@@ -15,7 +15,6 @@ function Tabs({ currentCity, cities, onChange }: ITabs): JSX.Element {
             <li className="locations__item" key={city}>
               <a
                 className={`locations__item-link tabs__item ${currentCity === city ? 'tabs__item--active' : ''}`}
-                href="#"
                 onClick={() => onChange(city)}
               >
                 <span>{city}</span>

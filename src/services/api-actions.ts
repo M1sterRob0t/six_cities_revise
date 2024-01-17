@@ -1,13 +1,14 @@
 import { ApiRoute, AuthStatus } from '../constants';
-import { requireAuth, setOffers } from '../store/actions';
+import { requireAuth, setOffer, setOffers, startLoading } from '../store/actions';
 import { ThunkActionResult } from '../store/types/thunk';
 import { TAuthInfo } from '../types/auth-info';
 import { TServerOffer } from '../types/offers';
-import { offersAdapter } from './adapters';
+import { offerAdapter, offersAdapter } from './adapters';
 import { dropToken, saveToken } from './token';
 
 export const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
+    dispatch(startLoading());
     const { data } = await api.get<TServerOffer[]>(ApiRoute.Offers);
     const offers = offersAdapter(data);
     dispatch(setOffers(offers));
@@ -34,4 +35,12 @@ export const logoutAction = (): ThunkActionResult =>
     await api.delete(ApiRoute.Logout);
     dropToken();
     dispatch(requireAuth(AuthStatus.NoAuth));
+  };
+
+export const fetchOfferAction = (id: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    dispatch(startLoading());
+    const { data } = await api.get<TServerOffer>(`${ApiRoute.Offers}/${id}`);
+    const offer = offerAdapter(data);
+    dispatch(setOffer(offer));
   };

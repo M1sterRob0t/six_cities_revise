@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ConnectedProps, connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Dispatch, bindActionCreators } from 'redux';
 
 import Map from '../UI/Map';
 import PlacesList from '../PlacesList';
@@ -12,8 +12,9 @@ import { changeCurrentCity } from '../../store/actions';
 import type { TState } from '../../store/types/state';
 import type { TActions } from '../../store/types/actions';
 import type { TOffer } from '../../types/offers';
-import type { TCity, TCityName, TPoint } from '../../types/map';
+import type { TCityName, TPoint } from '../../types/map';
 import Spinner from '../Spinner';
+import { fetchOffersAction } from '../../services/api-actions';
 
 function getSortedOffers(offers: TOffer[], sortType: SortType): TOffer[] {
   const sortedOffers = offers.slice();
@@ -35,22 +36,26 @@ function getSortedOffers(offers: TOffer[], sortType: SortType): TOffer[] {
   return sortedOffers;
 }
 
-const mapStateToProps = ({ city, offers, isLoading }: TState) => ({
+const mapStateToProps = ({ city, offers, isDataLoading }: TState) => ({
   currentCity: city,
   currentOffers: offers.filter((offer) => offer.city.name === city.name),
-  isLoading,
+  isDataLoading,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<TActions>) => ({
-  onCityChange(newCity: TCity) {
-    dispatch(changeCurrentCity(newCity));
-  },
-});
+const mapDispatchToProps = (dispatch: Dispatch<TActions>) => bindActionCreators({
+  onCityChange: changeCurrentCity,
+  onOffersFetch: fetchOffersAction,
+}, dispatch);
+
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Main({ currentOffers, currentCity, onCityChange, isLoading }: PropsFromRedux): JSX.Element {
+function Main({ currentOffers, currentCity, onCityChange, isDataLoading, onOffersFetch }: PropsFromRedux): JSX.Element {
+  useEffect(() => {
+    onOffersFetch();
+  }, [onOffersFetch]);
+
   const [activePoint, setActivePoint] = useState<TPoint | null>(null);
   const [sortType, setSortType] = useState(SortType.Popular);
 
@@ -74,7 +79,7 @@ function Main({ currentOffers, currentCity, onCityChange, isLoading }: PropsFrom
       <h1 className="visually-hidden">Cities</h1>
       <Tabs currentCity={currentCity.name} cities={cityNames} onChange={onTabChange} />
       <div className="cities">
-        {isLoading ? (
+        {isDataLoading ? (
           <Spinner />
         ) : (
           <div className="cities__places-container container">

@@ -4,7 +4,8 @@ import FavoriteLocation from './FavoritesLocation';
 
 import type { TState } from '../../store/types/state';
 
-const mapStateToProps = ({ offers }: TState) => ({
+const mapStateToProps = ({ offers, isDataLoading }: TState) => ({
+  isDataLoading,
   favoriteOffers: offers.filter((offer) => offer.isFavorite),
 });
 
@@ -16,7 +17,7 @@ function Favorites({ favoriteOffers }: PropsFromRedux): JSX.Element {
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        <FavoriteLocation places={favoriteOffers} location={favoriteOffers[0].city.name} />
+        {!!favoriteOffers.length && <FavoriteLocation places={favoriteOffers} location={favoriteOffers[0].city.name} />}
       </ul>
     </section>
   );

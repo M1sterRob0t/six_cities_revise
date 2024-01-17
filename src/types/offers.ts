@@ -34,9 +34,9 @@ export type TServerOffer = {
   description: string;
   goods: string[];
   host: {
-    avatarUrl: string;
+    avatar_url: string;
     id: number;
-    isPro: boolean;
+    is_pro: boolean;
     name: string;
   };
   id: number;

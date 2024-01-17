@@ -6,5 +6,6 @@ export type TState = {
   city: TCity;
   offers: TOffer[];
   authStatus: AuthStatus;
-  isLoading: boolean;
+  isDataLoading: boolean;
+  offer: TOffer | null;
 };

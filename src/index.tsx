@@ -11,7 +11,7 @@ import { createApi } from './services/api';
 import { requireAuth } from './store/actions';
 import { AuthStatus } from './constants';
 import { ThunkAppDispatch } from './store/types/thunk';
-import { checkAuthAction, fetchOffersAction } from './services/api-actions';
+import { checkAuthAction } from './services/api-actions';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -24,7 +24,7 @@ const store = createStore(reducer, composeWithDevTools(
 ));
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
-(store.dispatch as ThunkAppDispatch)(fetchOffersAction());
+// (store.dispatch as ThunkAppDispatch)(fetchOffersAction());
 
 root.render(
   <Provider store={store}>

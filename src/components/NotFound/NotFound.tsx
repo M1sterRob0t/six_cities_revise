@@ -13,7 +13,7 @@ function NotFound(): JSX.Element {
         404. Page not found...
       </h1>
       <p className="not-found__message-additional">
-        Go to <Link to={AppRoute.Main}>Main Page</Link>
+        <Link to={AppRoute.Main}>Go to Main Page</Link>
       </p>
     </div>
   );

@@ -8,7 +8,6 @@ const initialState: TState = {
   offers: [],
   authStatus: AuthStatus.Unknown,
   isDataLoading: false,
-  offer: null,
 };
 
 function reducer(state: TState = initialState, action: TActions): TState {
@@ -21,8 +20,6 @@ function reducer(state: TState = initialState, action: TActions): TState {
       return { ...state, authStatus: action.payload };
     case ActionType.RequireLogout:
       return { ...state, authStatus: AuthStatus.NoAuth };
-    case ActionType.SetOffer:
-      return { ...state, offer: action.payload, isDataLoading: false };
     case ActionType.StartLoading:
       return { ...state, isDataLoading: true };
     default:

@@ -1,10 +1,11 @@
 import { ApiRoute, AuthStatus } from '../constants';
-import { requireAuth, setOffer, setOffers, startLoading } from '../store/actions';
-import { ThunkActionResult } from '../store/types/thunk';
-import { TAuthInfo } from '../types/auth-info';
-import { TServerOffer } from '../types/offers';
-import { offerAdapter, offersAdapter } from './adapters';
+import { requireAuth, setOffers, startLoading } from '../store/actions';
+import { offersAdapter} from './adapters';
 import { dropToken, saveToken } from './token';
+
+import type { ThunkActionResult } from '../store/types/thunk';
+import type { TAuthInfo } from '../types/auth-info';
+import type { TServerOffer } from '../types/offers';
 
 export const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -13,7 +14,6 @@ export const fetchOffersAction = (): ThunkActionResult =>
     const offers = offersAdapter(data);
     dispatch(setOffers(offers));
   };
-
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -37,10 +37,17 @@ export const logoutAction = (): ThunkActionResult =>
     dispatch(requireAuth(AuthStatus.NoAuth));
   };
 
-export const fetchOfferAction = (id: string): ThunkActionResult =>
+/* export const fetchOfferAction = (id: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     dispatch(startLoading());
     const { data } = await api.get<TServerOffer>(`${ApiRoute.Offers}/${id}`);
     const offer = offerAdapter(data);
     dispatch(setOffer(offer));
-  };
+  }; */
+
+/* export const fetchOffersNearby = (id: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.get<TServerOffer[]>(`${ApiRoute.Offers}/${id}/nearby`);
+    const offers = offersAdapter(data);
+    dispatch(setOffersNearby(offers));
+  }; */

@@ -1,6 +1,8 @@
 import axios from 'axios';
-import type { AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
+
 import { getToken } from './token';
+
+import type { AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 
 const BASE_URL = 'https://8.react.pages.academy/six-cities';
 const TIMEOUT = 5000;
@@ -33,6 +35,7 @@ const createApi = (unauthorizedCallback: TUnauthCallback): AxiosInstance => {
   api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
       const token = getToken();
+
       if (token && config.headers) {
         config.headers['x-token'] = token;
       }

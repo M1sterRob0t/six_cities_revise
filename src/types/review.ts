@@ -1,4 +1,4 @@
-import { TUser } from './user';
+import { TUser, TServerUser } from './user';
 
 export type TReview = {
   'comment': string;
@@ -6,4 +6,12 @@ export type TReview = {
   'id': number;
   'rating': number;
   'user': TUser;
+}
+
+export type TServerReview = {
+  'comment': string;
+  'date': string;
+  'id': number;
+  'rating': number;
+  'user': TServerUser;
 }

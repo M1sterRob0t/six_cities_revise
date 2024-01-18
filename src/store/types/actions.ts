@@ -1,4 +1,4 @@
-import { changeCurrentCity, requireAuth, requireLogout, setOffer, setOffers, startLoading } from '../actions';
+import { changeCurrentCity, requireAuth, requireLogout, setOffers, startLoading } from '../actions';
 
 export enum ActionType {
   ChangeCurrentCity = 'main/changeCurrentCity',
@@ -7,6 +7,7 @@ export enum ActionType {
   RequireLogout = 'user/requireLogout',
   SetOffer = 'property/setOffer',
   StartLoading = 'offers/startLoading',
+  SetOffersNearby = 'offers/setOffersNearby',
 }
 
 export type TActions =
@@ -14,5 +15,4 @@ export type TActions =
   | ReturnType<typeof setOffers>
   | ReturnType<typeof requireLogout>
   | ReturnType<typeof requireAuth>
-  | ReturnType<typeof setOffer>
   | ReturnType<typeof startLoading>;

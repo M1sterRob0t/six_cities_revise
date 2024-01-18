@@ -1,4 +1,5 @@
 import { TOffer, TServerOffer } from '../types/offers';
+import { TReview, TServerReview } from '../types/review';
 
 export function offersAdapter(serverOffers: TServerOffer[]): TOffer[] {
   return serverOffers.map((serverOffer) => ({
@@ -58,4 +59,19 @@ export function offerAdapter(serverOffer: TServerOffer): TOffer {
     title: serverOffer.title,
     type: serverOffer.type,
   };
+}
+
+export function reviewsAdapter(serverReviews: TServerReview[]): TReview[] {
+  return serverReviews.map((serverReview) => ({
+    comment: serverReview.comment,
+    date: serverReview.date,
+    id: serverReview.id,
+    rating: serverReview.rating,
+    user: {
+      avatarUrl: serverReview.user.avatar_url,
+      id: serverReview.user.id,
+      isPro: serverReview.user.is_pro,
+      name: serverReview.user.name,
+    },
+  }));
 }

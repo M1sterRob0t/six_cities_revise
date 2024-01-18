@@ -6,14 +6,8 @@ import PageMain from '../../pages/PageMain/PageMain';
 import NotFound from '../NotFound';
 import { AppRoute } from '../../constants';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
-import { TReview } from '../../types/review';
 
-
-interface IApp {
-  reviews: TReview[];
-}
-
-function App({reviews}: IApp): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -24,7 +18,7 @@ function App({reviews}: IApp): JSX.Element {
           <PageLogin />
         </Route>
         <Route path={AppRoute.Property} exact>
-          <PageProperty reviews={reviews} />
+          <PageProperty />
         </Route>
         <PrivateRoute path={AppRoute.Favorites} exact render={() => (
           <PageFavorites />

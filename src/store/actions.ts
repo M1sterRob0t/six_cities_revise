@@ -22,11 +22,6 @@ export const requireAuth = (authStatus: AuthStatus) => ({
   payload: authStatus,
 } as const);
 
-export const setOffer = (offer: TOffer) => ({
-  type: ActionType.SetOffer,
-  payload: offer,
-} as const);
-
 export const startLoading = () => ({
   type: ActionType.StartLoading,
 } as const);

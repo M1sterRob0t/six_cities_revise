@@ -1,65 +1,46 @@
-import { ConnectedProps, connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { Dispatch, bindActionCreators } from 'redux';
-import { useEffect } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
+import Spinner from '../../components/Spinner';
 import Header from '../../components/Header';
 import PlacesNearby from '../../components/PlacesNearby/PlacesNearby';
 import Property from '../../components/Property';
 
+import { AppRoute } from '../../constants';
+import { fetchOffer, fetchReviews, fetchOffersNearby } from '../../services/api-requests';
+
+import type { TOffer } from '../../types/offers';
 import type { TReview } from '../../types/review';
-import type { TState } from '../../store/types/state';
-import type { TActions } from '../../store/types/actions';
 
-import { fetchOfferAction } from '../../services/api-actions';
 
-import Spinner from '../../components/Spinner';
-
-const mapStateToProps = ({ offer, city, isDataLoading }: TState) => ({
-  offer,
-  city,
-  isDataLoading,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<TActions>) =>
-  bindActionCreators(
-    {
-      onOfferLoad: fetchOfferAction,
-    },
-    dispatch
-  );
-
-interface IPageProperty {
-  reviews: TReview[];
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & IPageProperty;
-
-function PageProperty({
-  offer,
-  city,
-  isDataLoading,
-  reviews,
-  onOfferLoad,
-}: ConnectedComponentProps): JSX.Element {
+function PageProperty(): JSX.Element {
   const { id } = useParams<{ id: 'offerId' }>();
+  const [reviews, setReviews] = useState<TReview[]>([]);
+  const [offersNearby, setOffersNearby] = useState<TOffer[]>([]);
+  const [offer, setOffer] = useState<TOffer | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
-    onOfferLoad(id);
-  }, [onOfferLoad, id]);
+    fetchOffer(id).then((result) => setOffer(result)).finally(() => setIsLoading(false));
+    fetchOffersNearby(id).then((result) => setOffersNearby(result));
+    fetchReviews(id).then((result) => setReviews(result));
+  }, [id]);
+
+  if(!isLoading && !offer) {
+    return <Redirect to={AppRoute.NotFound} />;
+  }
 
   return (
     <div className="page">
       <Header />
-      {isDataLoading || !offer ? (
+      {isLoading || !offer ? (
         <Spinner />
       ) : (
         <main className="page__main page__main--property">
-          <Property place={offer} reviews={reviews} placesNearby={[]} />
+          <Property place={offer} reviews={reviews} placesNearby={offersNearby || []} />
           <div className="container">
-            <PlacesNearby places={[]} />
+            <PlacesNearby places={offersNearby || []} />
           </div>
         </main>
       )}
@@ -67,4 +48,4 @@ function PageProperty({
   );
 }
 
-export default connector(PageProperty);
+export default PageProperty;

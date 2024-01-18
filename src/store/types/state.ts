@@ -7,5 +7,4 @@ export type TState = {
   offers: TOffer[];
   authStatus: AuthStatus;
   isDataLoading: boolean;
-  offer: TOffer | null;
 };

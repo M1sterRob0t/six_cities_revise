@@ -18,7 +18,8 @@ interface IProperty {
 function Property({ place, reviews, placesNearby }: IProperty): JSX.Element {
   const { isPremium, host, isFavorite, title, goods, description, bedrooms, images, price, rating, type, maxAdults } = place;
   const city: TCity = place.city;
-  const points: TPoint[] = placesNearby.map((offer) => ({...offer.location, id: offer.id}));
+  const points: TPoint[] = [place, ...placesNearby].map((offer) => ({...offer.location, id: offer.id}));
+  const currentPoint = points[0];
 
   return (
     <section className="property">
@@ -85,7 +86,7 @@ function Property({ place, reviews, placesNearby }: IProperty): JSX.Element {
           <Reviews reviews={reviews} />
         </div>
       </div>
-      <Map city={city} points={points} selectedPoint={null} parentName='property'/>
+      <Map city={city} points={points} selectedPoint={currentPoint} parentName='property'/>
     </section>
   );
 }

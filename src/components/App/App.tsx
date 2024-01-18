@@ -4,20 +4,10 @@ import PageProperty from '../../pages/PageProperty';
 import PageLogin from '../../pages/PageLogin';
 import PageMain from '../../pages/PageMain/PageMain';
 import NotFound from '../NotFound';
-import { AppRoute } from '../../utils/constants';
+import { AppRoute } from '../../constants';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
-import { TOffer } from '../../types/offers';
-import { TReview } from '../../types/review';
 
-
-interface IApp {
-  offers: TOffer[];
-  reviews: TReview[];
-}
-
-function App({offers, reviews}: IApp): JSX.Element {
-  const isAuthorized = true;
-
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -28,10 +18,10 @@ function App({offers, reviews}: IApp): JSX.Element {
           <PageLogin />
         </Route>
         <Route path={AppRoute.Property} exact>
-          <PageProperty reviews={reviews} />
+          <PageProperty />
         </Route>
-        <PrivateRoute path={AppRoute.Favorites} isAuthorized={isAuthorized} exact render={() => (
-          <PageFavorites offers={offers} />
+        <PrivateRoute path={AppRoute.Favorites} exact render={() => (
+          <PageFavorites />
         )}
         />
         <Route path={AppRoute.NotFound}>

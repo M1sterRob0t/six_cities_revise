@@ -1,28 +1,31 @@
-import { TCity, TPoint } from '../../types/map';
-import { TOffer } from '../../types/offers';
-import { TReview } from '../../types/review';
 import Reviews from '../Reviews';
 import BookmarkButton from '../UI/BookmarkButton';
 import Map from '../UI/Map';
 import Rating from '../UI/Rating';
 import User from '../UI/User';
 
+import type { TCity, TPoint } from '../../types/map';
+import type { TOffer } from '../../types/offers';
+
+const IMAGES_NUMBER = 6;
+
 interface IProperty {
   place: TOffer;
-  reviews: TReview[];
   placesNearby: TOffer[];
 }
 
-function Property({ place, reviews, placesNearby }: IProperty): JSX.Element {
+
+function Property({ place, placesNearby }: IProperty): JSX.Element {
   const { isPremium, host, isFavorite, title, goods, description, bedrooms, images, price, rating, type, maxAdults } = place;
   const city: TCity = place.city;
-  const points: TPoint[] = placesNearby.map((offer) => ({...offer.location, id: offer.id}));
+  const points: TPoint[] = [place, ...placesNearby].map((offer) => ({...offer.location, id: offer.id}));
+  const currentPoint = points[0];
 
   return (
     <section className="property">
       <div className="property__gallery-container container">
         <div className="property__gallery">
-          {images.map((src) => (
+          {images.slice(0, IMAGES_NUMBER).map((src) => (
             <div className="property__image-wrapper" key={src}>
               <img
                 className="property__image"
@@ -80,10 +83,10 @@ function Property({ place, reviews, placesNearby }: IProperty): JSX.Element {
               </p>
             </div>
           </div>
-          <Reviews reviews={reviews} />
+          <Reviews />
         </div>
       </div>
-      <Map city={city} points={points} selectedPoint={null} parentName='property'/>
+      <Map city={city} points={points} selectedPoint={currentPoint} parentName='property'/>
     </section>
   );
 }

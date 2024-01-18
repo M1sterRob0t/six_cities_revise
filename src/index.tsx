@@ -1,18 +1,18 @@
 import ReactDOM from 'react-dom/client';
-import App from './components/App';
-import { mockOffers } from './mock/offers';
-import { mockReviews } from './mock/reviews';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { reducer } from './store/reducer';
-import {composeWithDevTools} from 'redux-devtools-extension';
+
+import App from './components/App';
+import { checkAuthAction } from './services/api-actions';
+import { store } from './store/store';
+
+import type { ThunkAppDispatch } from './store/types/thunk';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-const store = createStore(reducer, composeWithDevTools());
+(store.dispatch as ThunkAppDispatch)(checkAuthAction());
 
 root.render(
   <Provider store={store}>
-    <App offers={mockOffers} reviews={mockReviews} />
+    <App />
   </Provider>
 );

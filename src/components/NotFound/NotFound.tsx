@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './style.css';
 
 import ErrorImage from './image/sad-cat.png';
-import { AppRoute } from '../../utils/constants';
+import { AppRoute } from '../../constants';
 
 function NotFound(): JSX.Element {
   return (
@@ -13,7 +13,7 @@ function NotFound(): JSX.Element {
         404. Page not found...
       </h1>
       <p className="not-found__message-additional">
-        Go to <Link to={AppRoute.Main}>Main Page</Link>
+        <Link to={AppRoute.Main}>Go to Main Page</Link>
       </p>
     </div>
   );

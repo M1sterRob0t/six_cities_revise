@@ -18,9 +18,9 @@ export enum CityName {
 export const City = {
   Cologne: {
     location: {
-      latitude: 50.935173,
-      longitude: 6.953101,
-      zoom: 10,
+      latitude: 50.938361,
+      longitude: 6.959974,
+      zoom: 13
     },
     name: 'Cologne',
   },
@@ -28,31 +28,31 @@ export const City = {
     location: {
       latitude: 52.370216,
       longitude: 4.895168,
-      zoom: 10,
+      zoom: 10
     },
-    name: 'Brussels',
+    name: 'Brussels'
   },
   Amsterdam: {
     location: {
-      latitude: 52.370216,
-      longitude: 4.895168,
-      zoom: 10,
+      latitude: 52.37454,
+      longitude: 4.897976,
+      zoom: 13
     },
-    name: 'Amsterdam',
+    name: 'Amsterdam'
   },
   Hamburg: {
     location: {
-      latitude: 52.370216,
-      longitude: 4.895168,
-      zoom: 10,
+      latitude: 53.550341,
+      longitude: 10.000654,
+      zoom: 13
     },
-    name: 'Hamburg',
+    name: 'Hamburg'
   },
   Dusseldorf: {
     location: {
-      latitude: 52.370216,
-      longitude: 4.895168,
-      zoom: 10,
+      latitude: 51.225402,
+      longitude: 6.776314,
+      zoom: 13
     },
     name: 'Dusseldorf',
   },
@@ -60,10 +60,25 @@ export const City = {
 
 export const cityNames = Object.values(City).map((city) => city.name);
 
-
 export enum SortType {
   Popular = 'Popular',
   PriceLow = 'Price: low to high',
   PriceHigh = 'Price: high to low',
   TopRated = 'Top rated first',
 }
+
+export enum AuthStatus {
+  Auth = 'Authorized',
+  NoAuth = 'Unauthorized',
+  Unknown = 'Unknown',
+}
+
+export enum ApiRoute {
+  Offers = '/hotels',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+

@@ -1,21 +1,21 @@
-import { TCity, TPoint } from '../../types/map';
-import { TOffer } from '../../types/offers';
-import { TReview } from '../../types/review';
 import Reviews from '../Reviews';
 import BookmarkButton from '../UI/BookmarkButton';
 import Map from '../UI/Map';
 import Rating from '../UI/Rating';
 import User from '../UI/User';
 
+import type { TCity, TPoint } from '../../types/map';
+import type { TOffer } from '../../types/offers';
+
 const IMAGES_NUMBER = 6;
 
 interface IProperty {
   place: TOffer;
-  reviews: TReview[];
   placesNearby: TOffer[];
 }
 
-function Property({ place, reviews, placesNearby }: IProperty): JSX.Element {
+
+function Property({ place, placesNearby }: IProperty): JSX.Element {
   const { isPremium, host, isFavorite, title, goods, description, bedrooms, images, price, rating, type, maxAdults } = place;
   const city: TCity = place.city;
   const points: TPoint[] = [place, ...placesNearby].map((offer) => ({...offer.location, id: offer.id}));
@@ -83,7 +83,7 @@ function Property({ place, reviews, placesNearby }: IProperty): JSX.Element {
               </p>
             </div>
           </div>
-          <Reviews reviews={reviews} />
+          <Reviews />
         </div>
       </div>
       <Map city={city} points={points} selectedPoint={currentPoint} parentName='property'/>

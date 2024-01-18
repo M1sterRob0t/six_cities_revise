@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react';
 import { ConnectedProps, connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 
+import Spinner from '../Spinner';
 import Map from '../UI/Map';
 import PlacesList from '../PlacesList';
 import Sorting from '../Sorting';
 import Tabs from '../Tabs';
+
 import { City, SortType, cityNames } from '../../constants';
 import { changeCurrentCity } from '../../store/actions';
+import { fetchOffersAction } from '../../services/api-actions';
 
 import type { TState } from '../../store/types/state';
 import type { TActions } from '../../store/types/actions';
 import type { TOffer } from '../../types/offers';
 import type { TCityName, TPoint } from '../../types/map';
-import Spinner from '../Spinner';
-import { fetchOffersAction } from '../../services/api-actions';
 
 function getSortedOffers(offers: TOffer[], sortType: SortType): TOffer[] {
   const sortedOffers = offers.slice();

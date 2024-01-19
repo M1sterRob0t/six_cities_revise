@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { TOffer } from '../../types/offers';
 import Card from '../UI/Card';
 
@@ -7,6 +8,7 @@ interface IPlacesList {
 }
 
 function PlacesList({ places, onCardHover }: IPlacesList): JSX.Element {
+  console.log('rerender');
   return (
     <div className="cities__places-list places__list tabs__content">
       {places.map((place) => (
@@ -16,4 +18,4 @@ function PlacesList({ places, onCardHover }: IPlacesList): JSX.Element {
   );
 }
 
-export default PlacesList;
+export default memo(PlacesList);

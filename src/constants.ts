@@ -28,9 +28,9 @@ export const City = {
   },
   Brussels: {
     location: {
-      latitude: 52.370216,
-      longitude: 4.895168,
-      zoom: 10,
+      latitude: 50.846557,
+      longitude: 4.351697,
+      zoom: 13,
     },
     name: 'Brussels',
   },

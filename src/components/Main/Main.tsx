@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ConnectedProps, connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 
@@ -43,16 +43,25 @@ const mapStateToProps = ({ city, offers, isDataLoading }: TState) => ({
   isDataLoading,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<TActions>) => bindActionCreators({
-  onCityChange: changeCurrentCity,
-  onOffersFetch: fetchOffersAction,
-}, dispatch);
-
+const mapDispatchToProps = (dispatch: Dispatch<TActions>) =>
+  bindActionCreators(
+    {
+      onCityChange: changeCurrentCity,
+      onOffersFetch: fetchOffersAction,
+    },
+    dispatch
+  );
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Main({ currentOffers, currentCity, onCityChange, isDataLoading, onOffersFetch }: PropsFromRedux): JSX.Element {
+function Main({
+  currentOffers,
+  currentCity,
+  onCityChange,
+  isDataLoading,
+  onOffersFetch,
+}: PropsFromRedux): JSX.Element {
   useEffect(() => {
     onOffersFetch();
   }, [onOffersFetch]);
@@ -61,19 +70,19 @@ function Main({ currentOffers, currentCity, onCityChange, isDataLoading, onOffer
   const [sortType, setSortType] = useState(SortType.Popular);
 
   const points: TPoint[] = currentOffers.map((offer) => ({ ...offer.location, id: offer.id }));
-  const sortedOffers: TOffer[] = getSortedOffers(currentOffers, sortType);
+  const sortedOffers: TOffer[] = useMemo(() => getSortedOffers(currentOffers, sortType), [currentOffers, sortType]);
 
-  function onCardHover(offer: TOffer | null): void {
+  const onCardHover = useCallback((offer: TOffer | null): void => {
     setActivePoint(offer ? { ...offer.location, id: offer.id } : null);
-  }
+  }, []);
 
-  function onTabChange(newCity: TCityName): void {
+  const onTabChange = useCallback((newCity: TCityName): void => {
     onCityChange(City[newCity]);
-  }
+  }, [onCityChange]);
 
-  function onSortTypeChange(newSortType: SortType): void {
+  const onSortTypeChange = useCallback((newSortType: SortType): void => {
     setSortType(newSortType);
-  }
+  }, []);
 
   return (
     <main className="page__main page__main--index">

@@ -1,12 +1,16 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import PageFavorites from '../../pages/PageFavorites';
 import PageProperty from '../../pages/PageProperty';
 import PageLogin from '../../pages/PageLogin';
 import PageMain from '../../pages/PageMain/PageMain';
 import NotFound from '../NotFound';
-import { AppRoute } from '../../constants';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
-import { ToastContainer } from 'react-toastify';
+
+import { AppRoute } from '../../constants';
+
 
 function App(): JSX.Element {
   return (

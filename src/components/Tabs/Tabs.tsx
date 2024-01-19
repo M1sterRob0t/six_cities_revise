@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { TCityName } from '../../types/map';
 
 interface ITabs {
@@ -7,6 +8,7 @@ interface ITabs {
 }
 
 function Tabs({ currentCity, cities, onChange }: ITabs): JSX.Element {
+  console.log('rerender');
   return (
     <div className="tabs">
       <section className="locations container">
@@ -27,4 +29,4 @@ function Tabs({ currentCity, cities, onChange }: ITabs): JSX.Element {
   );
 }
 
-export default Tabs;
+export default memo(Tabs);

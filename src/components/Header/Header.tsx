@@ -20,7 +20,6 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Header({ authStatus, onLogout }: PropsFromRedux): JSX.Element {
-
   return (
     <header className="header">
       <div className="container">

@@ -1,5 +1,5 @@
 import Reviews from '../Reviews';
-import BookmarkButton from '../UI/BookmarkButton';
+import BookmarkButton from '../BookmarkButton';
 import Map from '../UI/Map';
 import Rating from '../UI/Rating';
 import User from '../UI/User';
@@ -16,7 +16,7 @@ interface IProperty {
 
 
 function Property({ place, placesNearby }: IProperty): JSX.Element {
-  const { isPremium, host, isFavorite, title, goods, description, bedrooms, images, price, rating, type, maxAdults } = place;
+  const { isPremium, host, isFavorite, title, goods, description, bedrooms, images, price, rating, type, maxAdults, id } = place;
   const city: TCity = place.city;
   const points: TPoint[] = [place, ...placesNearby].map((offer) => ({...offer.location, id: offer.id}));
   const currentPoint = points[0];
@@ -47,7 +47,7 @@ function Property({ place, placesNearby }: IProperty): JSX.Element {
             <h1 className="property__name">
               {title}
             </h1>
-            <BookmarkButton className={'property'} isFavorite={isFavorite} />
+            <BookmarkButton className={'property'} isFavorite={isFavorite} id={id} />
           </div>
           <div className="property__rating rating">
             <Rating className="property" rating={rating} />

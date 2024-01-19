@@ -37,3 +37,16 @@ export const postReview = async (id: string, review: TReviewPost): Promise<TRevi
 };
 
 
+export const fetchFavorites = async (): Promise<TOffer[]> => {
+  const { data } = await api.get<TServerOffer[]>(ApiRoute.Favorite);
+  const offer = offersAdapter(data);
+  return offer;
+};
+
+export const postToFavorites = async (id: number, status: 1 | 0): Promise<TOffer> => {
+  const { data } = await api.post<TServerOffer>(`${ApiRoute.Favorite}/${id}/${status}`);
+  const offer = offerAdapter(data);
+  return offer;
+};
+
+

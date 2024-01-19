@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import BookmarkButton from '../BookmarkButton';
+import BookmarkButton from '../../BookmarkButton';
 import Rating from '../Rating';
 
 import { AppRoute } from '../../../constants';
@@ -56,7 +56,7 @@ function Card({ offer, parentName, onHover }: ICard): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton isFavorite={isFavorite} />
+          <BookmarkButton isFavorite={isFavorite} id={id}/>
         </div>
         <Rating className="place-card" rating={rating} />
         <h2 className="place-card__name">

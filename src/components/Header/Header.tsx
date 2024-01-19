@@ -1,25 +1,16 @@
 import { Link } from 'react-router-dom';
-import { ConnectedProps, connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
-
-import type { TState } from '../../store/types/state';
-import type { TActions } from '../../store/types/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { AppRoute, AuthStatus } from '../../constants';
 import { logoutAction } from '../../services/api-actions';
+import { getUserAuthStatus } from '../../store/reducers/user-reducer/selectors';
+import { AppDispatch } from '../../store/store';
 
-const mapStateToProps = ({ authStatus }: TState) => ({
-  authStatus,
-});
 
-const mapDispatchToProps = (dispatch: Dispatch<TActions>) => bindActionCreators({
-  onLogout: logoutAction
-}, dispatch);
+function Header(): JSX.Element {
+  const authStatus = useSelector(getUserAuthStatus);
+  const dispatch = useDispatch<AppDispatch>();
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Header({ authStatus, onLogout }: PropsFromRedux): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -51,7 +42,7 @@ function Header({ authStatus, onLogout }: PropsFromRedux): JSX.Element {
               <li className="header__nav-item">
                 <Link to={AppRoute.Login} className="header__nav-link">
                   {authStatus === AuthStatus.Auth ? (
-                    <span className="header__signout" onClick={() => onLogout()}>Sign out</span>
+                    <span className="header__signout" onClick={() => dispatch(logoutAction())}>Sign out</span>
                   ) : (
                     <span className="header__login">Sign in</span>
                   )}
@@ -65,4 +56,4 @@ function Header({ authStatus, onLogout }: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(Header);
+export default Header;

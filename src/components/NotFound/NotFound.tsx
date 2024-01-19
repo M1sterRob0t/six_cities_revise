@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 
-import './style.css';
+import { AppRoute } from '../../constants';
 
 import ErrorImage from './image/sad-cat.png';
-import { AppRoute } from '../../constants';
+import './style.css';
+
 
 function NotFound(): JSX.Element {
   return (

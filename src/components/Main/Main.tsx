@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ConnectedProps, connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
+import { useCallback, useMemo, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Spinner from '../Spinner';
 import Map from '../UI/Map';
@@ -10,10 +9,9 @@ import Tabs from '../Tabs';
 
 import { City, SortType, cityNames } from '../../constants';
 import { changeCurrentCity } from '../../store/actions';
-import { fetchOffersAction } from '../../services/api-actions';
+import { getCity, getLoadingStatus, getOffers } from '../../store/reducers/offers-reducer/selectors';
+import { AppDispatch } from '../../store/store';
 
-import type { TState } from '../../store/types/state';
-import type { TActions } from '../../store/types/actions';
 import type { TOffer } from '../../types/offers';
 import type { TCityName, TPoint } from '../../types/map';
 
@@ -37,48 +35,32 @@ function getSortedOffers(offers: TOffer[], sortType: SortType): TOffer[] {
   return sortedOffers;
 }
 
-const mapStateToProps = ({ city, offers, isDataLoading }: TState) => ({
-  currentCity: city,
-  currentOffers: offers.filter((offer) => offer.city.name === city.name),
-  isDataLoading,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<TActions>) =>
-  bindActionCreators(
-    {
-      onCityChange: changeCurrentCity,
-      onOffersFetch: fetchOffersAction,
-    },
-    dispatch
-  );
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Main({
-  currentOffers,
-  currentCity,
-  onCityChange,
-  isDataLoading,
-  onOffersFetch,
-}: PropsFromRedux): JSX.Element {
-  useEffect(() => {
-    onOffersFetch();
-  }, [onOffersFetch]);
-
+function Main(): JSX.Element {
+  const currentCity = useSelector(getCity);
+  const offers = useSelector(getOffers);
+  const isDataLoading = useSelector(getLoadingStatus);
   const [activePoint, setActivePoint] = useState<TPoint | null>(null);
   const [sortType, setSortType] = useState(SortType.Popular);
+  const dispatch = useDispatch<AppDispatch>();
 
+  const currentOffers = offers.filter((offer) => offer.city.name === currentCity.name);
   const points: TPoint[] = currentOffers.map((offer) => ({ ...offer.location, id: offer.id }));
-  const sortedOffers: TOffer[] = useMemo(() => getSortedOffers(currentOffers, sortType), [currentOffers, sortType]);
+
+  const sortedOffers: TOffer[] = useMemo(
+    () => getSortedOffers(currentOffers, sortType),
+    [currentOffers, sortType]
+  );
 
   const onCardHover = useCallback((offer: TOffer | null): void => {
     setActivePoint(offer ? { ...offer.location, id: offer.id } : null);
   }, []);
 
-  const onTabChange = useCallback((newCity: TCityName): void => {
-    onCityChange(City[newCity]);
-  }, [onCityChange]);
+  const onTabChange = useCallback(
+    (newCity: TCityName): void => {
+      dispatch(changeCurrentCity(City[newCity]));
+    },
+    [dispatch]
+  );
 
   const onSortTypeChange = useCallback((newSortType: SortType): void => {
     setSortType(newSortType);
@@ -116,4 +98,4 @@ function Main({
   );
 }
 
-export default connector(Main);
+export default Main;

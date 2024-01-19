@@ -1,20 +1,16 @@
 import { Redirect } from 'react-router-dom';
-import { ConnectedProps, connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Header from '../../components/Header';
 import LoginForm from '../../components/LoginForm';
+
 import { AppRoute, AuthStatus } from '../../constants';
+import { getUserAuthStatus } from '../../store/reducers/user-reducer/selectors';
 
-import type { TState } from '../../store/types/state';
 
-const mapStateToProps = ({ authStatus }: TState) => ({
-  authStatus,
-});
+function PageLogin(): JSX.Element {
+  const authStatus = useSelector(getUserAuthStatus);
 
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function PageLogin({authStatus}: PropsFromRedux): JSX.Element {
   if(authStatus === AuthStatus.Auth) {
     return <Redirect to={AppRoute.Main} />;
   }
@@ -41,4 +37,4 @@ function PageLogin({authStatus}: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(PageLogin);
+export default PageLogin;

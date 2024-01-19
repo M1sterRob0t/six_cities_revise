@@ -1,18 +1,13 @@
-import { ConnectedProps, connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import FavoriteLocation from './FavoritesLocation';
+import { getOffers } from '../../store/reducers/offers-reducer/selectors';
 
-import type { TState } from '../../store/types/state';
 
-const mapStateToProps = ({ offers, isDataLoading }: TState) => ({
-  isDataLoading,
-  favoriteOffers: offers.filter((offer) => offer.isFavorite),
-});
+function Favorites(): JSX.Element {
+  const offers = useSelector(getOffers);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Favorites({ favoriteOffers }: PropsFromRedux): JSX.Element {
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
@@ -23,4 +18,4 @@ function Favorites({ favoriteOffers }: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(Favorites);
+export default Favorites;

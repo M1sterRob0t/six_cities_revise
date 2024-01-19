@@ -1,26 +1,19 @@
-import { ConnectedProps, connect } from 'react-redux';
 import {Route, Redirect, RouteProps} from 'react-router-dom';
 
-import { AppRoute, AuthStatus } from '../../constants';
-
-import type { TState } from '../../store/types/state';
 import Spinner from '../Spinner';
 
+import { AppRoute, AuthStatus } from '../../constants';
+import { getUserAuthStatus } from '../../store/reducers/user-reducer/selectors';
+import { useSelector } from 'react-redux';
 
-const mapStateToProps = ({ authStatus }: TState) => ({
-  authStatus,
-});
 
 interface IPrivateRoute {
   render: () => JSX.Element;
 }
 
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & IPrivateRoute & RouteProps;
-
-function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
-  const {exact, path, render, authStatus} = props;
+function PrivateRoute(props: IPrivateRoute & RouteProps): JSX.Element {
+  const {exact, path, render} = props;
+  const authStatus = useSelector(getUserAuthStatus);
 
   if (authStatus === AuthStatus.Unknown) {
     return <Spinner />;
@@ -37,4 +30,4 @@ function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export default connector(PrivateRoute);
+export default PrivateRoute;

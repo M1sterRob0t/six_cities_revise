@@ -1,5 +1,8 @@
 import { memo, useState } from 'react';
+
 import { SortType } from '../../constants';
+
+
 const sortTypes = Object.values(SortType);
 
 interface ISorting {
@@ -9,7 +12,6 @@ interface ISorting {
 
 function Sorting({ currentSortType, onSortTypeChange }: ISorting): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);
-  console.log('rerender');
 
   function onClick() {
     setIsOpened((prev) => !prev);

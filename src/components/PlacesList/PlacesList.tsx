@@ -8,7 +8,6 @@ interface IPlacesList {
 }
 
 function PlacesList({ places, onCardHover }: IPlacesList): JSX.Element {
-  console.log('rerender');
   return (
     <div className="cities__places-list places__list tabs__content">
       {places.map((place) => (

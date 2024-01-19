@@ -1,9 +1,12 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { TOffer } from '../../../types/offers';
+
 import BookmarkButton from '../BookmarkButton';
 import Rating from '../Rating';
+
 import { AppRoute } from '../../../constants';
-import { memo } from 'react';
+
+import type { TOffer } from '../../../types/offers';
 
 interface ICard {
   offer: TOffer;
@@ -13,7 +16,6 @@ interface ICard {
 
 function Card({ offer, parentName, onHover }: ICard): JSX.Element {
   const { isFavorite, isPremium, price, title, type, rating, id } = offer;
-  console.log('render card');
   function onMouseEnter() {
     if (onHover) {
       onHover(offer);

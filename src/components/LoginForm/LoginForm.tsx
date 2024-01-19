@@ -1,12 +1,10 @@
 import { FormEvent, useState } from 'react';
-import { ConnectedProps, connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
 import { toast } from 'react-toastify';
 
 import { loginAction } from '../../services/api-actions';
 import { toastConfig } from '../../constants';
-
-import type { TActions } from '../../store/types/actions';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
 
 const PASSWORD_INVALLID_MESSAGE = 'Password must contain at least one letter and one number!';
 const EMAIL_INVALID_MESSAGE = 'Email must be correct!';
@@ -14,34 +12,12 @@ const EMAIL_INVALID_MESSAGE = 'Email must be correct!';
 const passwordRegexp = /^(?=.*[A-Za-z])(?=.*\d).+$/;
 const emailRegexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-const mapDispatchToProps = (dispatch: Dispatch<TActions>) =>
-  bindActionCreators(
-    {
-      onLogin: loginAction,
-    },
-    dispatch
-  );
-
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function LoginForm({ onLogin }: PropsFromRedux): JSX.Element {
+function LoginForm(): JSX.Element {
   const [password, setPasswrod] = useState('');
   const [email, setEmail] = useState('');
   const [isPasswordInvalid, setPasswordInvalid] = useState(false);
   const [isEmailInvalid, setEmailInvalid] = useState(false);
-
-  /* function checkIfPasswordInvalid(pass: string = password): void {
-    if (pass.match(passwordRegexp)) {
-      setPasswordInvalid(false);
-    }
-  }
-
-  function checkIfEmailInvalid(mail: string = email): void {
-    if (mail.match(emailRegexp)) {
-      setEmailInvalid(true);
-    }
-  } */
+  const dispatch = useDispatch<AppDispatch>();
 
   function onSubmit(evt: FormEvent) {
     evt.preventDefault();
@@ -64,10 +40,10 @@ function LoginForm({ onLogin }: PropsFromRedux): JSX.Element {
     }
 
     if (!isInvalid) {
-      onLogin({
+      dispatch(loginAction({
         email,
         password,
-      });
+      }));
     }
   }
 
@@ -129,4 +105,4 @@ function LoginForm({ onLogin }: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(LoginForm);
+export default LoginForm;

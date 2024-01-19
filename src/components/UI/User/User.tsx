@@ -1,4 +1,4 @@
-import { TUser } from '../../../types/user';
+import type { TUser } from '../../../types/user';
 
 interface IUSer {
   user: TUser;

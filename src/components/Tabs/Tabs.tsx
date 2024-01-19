@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { TCityName } from '../../types/map';
+
+import type { TCityName } from '../../types/map';
 
 interface ITabs {
   cities: Array<TCityName>; // или (keyof typeof City) []
@@ -8,7 +9,6 @@ interface ITabs {
 }
 
 function Tabs({ currentCity, cities, onChange }: ITabs): JSX.Element {
-  console.log('rerender');
   return (
     <div className="tabs">
       <section className="locations container">

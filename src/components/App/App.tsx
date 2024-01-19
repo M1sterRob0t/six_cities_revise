@@ -6,6 +6,7 @@ import PageMain from '../../pages/PageMain/PageMain';
 import NotFound from '../NotFound';
 import { AppRoute } from '../../constants';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import { ToastContainer } from 'react-toastify';
 
 function App(): JSX.Element {
   return (
@@ -28,6 +29,7 @@ function App(): JSX.Element {
           <NotFound />
         </Route>
       </Switch>
+      <ToastContainer />
     </BrowserRouter>
 
   );

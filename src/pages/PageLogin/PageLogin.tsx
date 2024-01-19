@@ -15,7 +15,6 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function PageLogin({authStatus}: PropsFromRedux): JSX.Element {
-
   if(authStatus === AuthStatus.Auth) {
     return <Redirect to={AppRoute.Main} />;
   }

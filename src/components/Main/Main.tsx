@@ -1,19 +1,24 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Spinner from '../Spinner';
 import Map from '../UI/Map';
 import PlacesList from '../PlacesList';
 import Sorting from '../Sorting';
 import Tabs from '../Tabs';
+import CitiesContainer from './CitiesContainer';
 
 import { City, SortType, cityNames } from '../../constants';
 import { changeCurrentCity } from '../../store/actions';
-import { getCity, getLoadingStatus, getOffers } from '../../store/reducers/offers-reducer/selectors';
+import {
+  getCity,
+  getCurrentOffers,
+  getLoadingStatus,
+} from '../../store/reducers/offers-reducer/selectors';
 import { AppDispatch } from '../../store/store';
 
 import type { TOffer } from '../../types/offers';
 import type { TCityName, TPoint } from '../../types/map';
+
 
 function getSortedOffers(offers: TOffer[], sortType: SortType): TOffer[] {
   const sortedOffers = offers.slice();
@@ -37,13 +42,13 @@ function getSortedOffers(offers: TOffer[], sortType: SortType): TOffer[] {
 
 function Main(): JSX.Element {
   const currentCity = useSelector(getCity);
-  const offers = useSelector(getOffers);
+  const currentOffers = useSelector(getCurrentOffers);
   const isDataLoading = useSelector(getLoadingStatus);
+
   const [activePoint, setActivePoint] = useState<TPoint | null>(null);
   const [sortType, setSortType] = useState(SortType.Popular);
   const dispatch = useDispatch<AppDispatch>();
 
-  const currentOffers = offers.filter((offer) => offer.city.name === currentCity.name);
   const points: TPoint[] = currentOffers.map((offer) => ({ ...offer.location, id: offer.id }));
 
   const sortedOffers: TOffer[] = useMemo(
@@ -71,9 +76,7 @@ function Main(): JSX.Element {
       <h1 className="visually-hidden">Cities</h1>
       <Tabs currentCity={currentCity.name} cities={cityNames} onChange={onTabChange} />
       <div className="cities">
-        {isDataLoading ? (
-          <Spinner />
-        ) : (
+        <CitiesContainer isDataLoadding={isDataLoading} currentOffers={currentOffers}>
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
@@ -92,7 +95,7 @@ function Main(): JSX.Element {
               />
             </div>
           </div>
-        )}
+        </CitiesContainer>
       </div>
     </main>
   );

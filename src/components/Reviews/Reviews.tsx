@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ConnectedProps } from 'react-redux';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import Comment from './Comment/Comment';
@@ -8,19 +7,14 @@ import ReviewForm from './ReviewForm';
 
 import { AuthStatus } from '../../constants';
 import { fetchReviews, postReview } from '../../services/api-requests';
+import { getUserAuthStatus } from '../../store/reducers/user-reducer/selectors';
 
 import type { TReview, TReviewPost } from '../../types/review';
-import type { TState } from '../../store/types/state';
 
-const mapStateToProps = ({ authStatus }: TState) => ({
-  authStatus,
-});
 
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Reviews({ authStatus }: PropsFromRedux): JSX.Element {
+function Reviews(): JSX.Element {
   const { id } = useParams<{ id: 'offerId' }>();
+  const authStatus = useSelector(getUserAuthStatus);
   const [reviews, setReviews] = useState<TReview[]>([]);
 
   useEffect(() => {
@@ -52,4 +46,4 @@ function Reviews({ authStatus }: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(Reviews);
+export default Reviews;

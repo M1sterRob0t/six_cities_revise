@@ -1,8 +1,11 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
-import useMap from '../../../hooks/useMap';
-import type { TCity, TPoints, TPoint } from '../../../types/map';
 import 'leaflet/dist/leaflet.css';
+
+import useMap from '../../../hooks/useMap';
+
+import type { TCity, TPoints, TPoint } from '../../../types/map';
+
 import URL_MARKER_DEFAULT from './images/pin.svg';
 import URL_MARKER_CURRENT from './images/pin-active.svg';
 
@@ -48,7 +51,6 @@ function Map(props: IMap): JSX.Element {
           .addTo(map);
       });
 
-      // map.locate({setView: true, maxZoom: 8});
       map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
     }
   }, [map, points, selectedPoint, city]);

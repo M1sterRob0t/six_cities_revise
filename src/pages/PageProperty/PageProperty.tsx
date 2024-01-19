@@ -1,7 +1,5 @@
 import { Redirect, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import Spinner from '../../components/Spinner';
 import Header from '../../components/Header';
@@ -45,7 +43,6 @@ function PageProperty(): JSX.Element {
           </div>
         </main>
       )}
-      <ToastContainer />
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { Bounce, toast } from 'react-toastify';
-
-import type {ToastOptions} from 'react-toastify';
-import type { AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
+import { toast } from 'react-toastify';
 
 import { getToken } from './token';
+import { toastConfig } from '../constants';
+
+import type { AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 
 const BASE_URL = 'https://8.react.pages.academy/six-cities';
 const TIMEOUT = 5000;
@@ -12,18 +12,6 @@ const TIMEOUT = 5000;
 enum HttpCode {
   Unauthorized = 401,
 }
-
-const toastConfig: ToastOptions = {
-  position: 'top-center',
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: 'light',
-  transition: Bounce,
-};
 
 type TUnauthCallback = () => void;
 

@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
+
 import { SortType } from '../../constants';
+
+
 const sortTypes = Object.values(SortType);
 
 interface ISorting {
@@ -42,4 +45,4 @@ function Sorting({ currentSortType, onSortTypeChange }: ISorting): JSX.Element {
   );
 }
 
-export default Sorting;
+export default memo(Sorting);

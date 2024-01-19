@@ -1,4 +1,6 @@
-import { TCityName } from '../../types/map';
+import { memo } from 'react';
+
+import type { TCityName } from '../../types/map';
 
 interface ITabs {
   cities: Array<TCityName>; // или (keyof typeof City) []
@@ -27,4 +29,4 @@ function Tabs({ currentCity, cities, onChange }: ITabs): JSX.Element {
   );
 }
 
-export default Tabs;
+export default memo(Tabs);

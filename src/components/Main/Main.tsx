@@ -1,21 +1,24 @@
-import { useEffect, useState } from 'react';
-import { ConnectedProps, connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
+import { useCallback, useMemo, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import Spinner from '../Spinner';
 import Map from '../UI/Map';
 import PlacesList from '../PlacesList';
 import Sorting from '../Sorting';
 import Tabs from '../Tabs';
+import CitiesContainer from './CitiesContainer';
 
 import { City, SortType, cityNames } from '../../constants';
 import { changeCurrentCity } from '../../store/actions';
-import { fetchOffersAction } from '../../services/api-actions';
+import {
+  getCity,
+  getCurrentOffers,
+  getLoadingStatus,
+} from '../../store/reducers/offers-reducer/selectors';
+import { AppDispatch } from '../../store/store';
 
-import type { TState } from '../../store/types/state';
-import type { TActions } from '../../store/types/actions';
 import type { TOffer } from '../../types/offers';
 import type { TCityName, TPoint } from '../../types/map';
+
 
 function getSortedOffers(offers: TOffer[], sortType: SortType): TOffer[] {
   const sortedOffers = offers.slice();
@@ -37,52 +40,43 @@ function getSortedOffers(offers: TOffer[], sortType: SortType): TOffer[] {
   return sortedOffers;
 }
 
-const mapStateToProps = ({ city, offers, isDataLoading }: TState) => ({
-  currentCity: city,
-  currentOffers: offers.filter((offer) => offer.city.name === city.name),
-  isDataLoading,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<TActions>) => bindActionCreators({
-  onCityChange: changeCurrentCity,
-  onOffersFetch: fetchOffersAction,
-}, dispatch);
-
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Main({ currentOffers, currentCity, onCityChange, isDataLoading, onOffersFetch }: PropsFromRedux): JSX.Element {
-  useEffect(() => {
-    onOffersFetch();
-  }, [onOffersFetch]);
+function Main(): JSX.Element {
+  const currentCity = useSelector(getCity);
+  const currentOffers = useSelector(getCurrentOffers);
+  const isDataLoading = useSelector(getLoadingStatus);
 
   const [activePoint, setActivePoint] = useState<TPoint | null>(null);
   const [sortType, setSortType] = useState(SortType.Popular);
+  const dispatch = useDispatch<AppDispatch>();
 
   const points: TPoint[] = currentOffers.map((offer) => ({ ...offer.location, id: offer.id }));
-  const sortedOffers: TOffer[] = getSortedOffers(currentOffers, sortType);
 
-  function onCardHover(offer: TOffer | null): void {
+  const sortedOffers: TOffer[] = useMemo(
+    () => getSortedOffers(currentOffers, sortType),
+    [currentOffers, sortType]
+  );
+
+  const onCardHover = useCallback((offer: TOffer | null): void => {
     setActivePoint(offer ? { ...offer.location, id: offer.id } : null);
-  }
+  }, []);
 
-  function onTabChange(newCity: TCityName): void {
-    onCityChange(City[newCity]);
-  }
+  const onTabChange = useCallback(
+    (newCity: TCityName): void => {
+      dispatch(changeCurrentCity(City[newCity]));
+    },
+    [dispatch]
+  );
 
-  function onSortTypeChange(newSortType: SortType): void {
+  const onSortTypeChange = useCallback((newSortType: SortType): void => {
     setSortType(newSortType);
-  }
+  }, []);
 
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <Tabs currentCity={currentCity.name} cities={cityNames} onChange={onTabChange} />
       <div className="cities">
-        {isDataLoading ? (
-          <Spinner />
-        ) : (
+        <CitiesContainer isDataLoadding={isDataLoading} currentOffers={currentOffers}>
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
@@ -101,10 +95,10 @@ function Main({ currentOffers, currentCity, onCityChange, isDataLoading, onOffer
               />
             </div>
           </div>
-        )}
+        </CitiesContainer>
       </div>
     </main>
   );
 }
 
-export default connector(Main);
+export default Main;

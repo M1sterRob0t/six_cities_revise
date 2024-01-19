@@ -1,16 +1,21 @@
-import {composeWithDevTools} from 'redux-devtools-extension';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-
-import { reducer } from './reducer';
+import { configureStore } from '@reduxjs/toolkit';
 import { requireAuth } from './actions';
 import { AuthStatus } from '../constants';
 import { createApi } from '../services/api';
+import { rootReducer } from './root-reducer';
 
-const api = createApi(
-  () => store.dispatch(requireAuth(AuthStatus.NoAuth))
-);
+const api = createApi(() => store.dispatch(requireAuth(AuthStatus.NoAuth)));
 
-export const store = createStore(reducer, composeWithDevTools(
-  applyMiddleware(thunk.withExtraArgument(api))
-));
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+      serializableCheck: false,
+    }),
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

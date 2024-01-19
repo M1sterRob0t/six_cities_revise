@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { TOffer } from '../../types/offers';
 import Card from '../UI/Card';
 
@@ -16,4 +17,4 @@ function PlacesList({ places, onCardHover }: IPlacesList): JSX.Element {
   );
 }
 
-export default PlacesList;
+export default memo(PlacesList);

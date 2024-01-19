@@ -1,10 +1,3 @@
-import { AuthStatus } from '../../constants';
-import { TCity } from '../../types/map';
-import { TOffer } from '../../types/offers';
+import { TRootState } from '../root-reducer';
 
-export type TState = {
-  city: TCity;
-  offers: TOffer[];
-  authStatus: AuthStatus;
-  isDataLoading: boolean;
-};
+export type TState = TRootState;

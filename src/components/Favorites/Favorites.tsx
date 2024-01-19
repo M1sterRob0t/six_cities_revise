@@ -1,26 +1,50 @@
-import { ConnectedProps, connect } from 'react-redux';
+import { useEffect, useState } from 'react';
 
+import Spinner from '../Spinner';
 import FavoriteLocation from './FavoritesLocation';
 
-import type { TState } from '../../store/types/state';
+import { fetchFavorites } from '../../services/api-requests';
 
-const mapStateToProps = ({ offers, isDataLoading }: TState) => ({
-  isDataLoading,
-  favoriteOffers: offers.filter((offer) => offer.isFavorite),
-});
+import type { TOffer } from '../../types/offers';
 
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
+function Favorites(): JSX.Element {
+  const [favoriteOffers, setFavoriteOffers] = useState<TOffer[]>([]);
+  const [isLoading, setLoadingStatus] = useState(true);
+  const [isNeedUpdate, setNeedUpdateStatus] = useState(false);
 
-function Favorites({ favoriteOffers }: PropsFromRedux): JSX.Element {
+  const cities = Array.from(new Set(favoriteOffers.map((offer) => offer.city.name)));
+
+  useEffect(() => {
+    fetchFavorites()
+      .then((result) => {
+        setFavoriteOffers(result);
+      })
+      .finally(() => {
+        setLoadingStatus(false);
+        setNeedUpdateStatus(false);
+      });
+  }, [isNeedUpdate]);
+
+  function updateFavoriteOffers() {
+    setNeedUpdateStatus(true);
+  }
+
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        {!!favoriteOffers.length && <FavoriteLocation places={favoriteOffers} location={favoriteOffers[0].city.name} />}
+        {isLoading && <Spinner />}
+        {cities.map((city) => (
+          <FavoriteLocation
+            places={favoriteOffers.filter((offer) => offer.city.name === city)}
+            location={city}
+            onToggleFavorite={updateFavoriteOffers}
+            key={city}
+          />
+        ))}
       </ul>
     </section>
   );
 }
 
-export default connector(Favorites);
+export default Favorites;

@@ -1,27 +1,17 @@
+import { createAction } from '@reduxjs/toolkit';
+
 import { AuthStatus } from '../constants';
-import { TCity } from '../types/map';
-import { TOffer } from '../types/offers';
 import { ActionType } from './types/actions';
 
-export const changeCurrentCity = (newCity: TCity) => ({
-  type: ActionType.ChangeCurrentCity,
-  payload: newCity,
-} as const);
+import type { TCity } from '../types/map';
+import type { TOffer } from '../types/offers';
 
-export const setOffers = (offers: TOffer[]) => ({
-  type: ActionType.SetOffers,
-  payload: offers,
-} as const);
+function withPayloadType<T>() {
+  return (t: T) => ({ payload: t });
+}
 
-export const requireLogout = () => ({
-  type: ActionType.RequireLogout,
-} as const);
-
-export const requireAuth = (authStatus: AuthStatus) => ({
-  type: ActionType.RequireAuth,
-  payload: authStatus,
-} as const);
-
-export const startLoading = () => ({
-  type: ActionType.StartLoading,
-} as const);
+export const changeCurrentCity = createAction(ActionType.ChangeCurrentCity, withPayloadType<TCity>());
+export const setOffers = createAction(ActionType.SetOffers, withPayloadType<TOffer[]>());
+export const requireAuth = createAction(ActionType.RequireAuth, withPayloadType<AuthStatus>());
+export const requireLogout = createAction(ActionType.RequireLogout);
+export const startLoading = createAction(ActionType.StartLoading);
